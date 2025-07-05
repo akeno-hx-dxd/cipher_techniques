@@ -18,7 +18,9 @@ class CaeserCipher {
                 case 1 : {
                     System.out.println("Selection - Encrypt.");
                     System.out.print("Input the plaintext: ");
-                    String pt = scan.next();
+                    //java things 
+                    scan.nextLine();
+                    String pt = scan.nextLine();
                     System.out.print("Input the key: ");
                     int key = scan.nextInt();
                     //encrypt
@@ -29,7 +31,8 @@ class CaeserCipher {
                 case 2 : {
                     System.out.println("Selection - Decrypt.");
                     System.out.print("Input the ciphertext: ");
-                    String ct = scan.next();
+                    scan.nextLine();
+                    String ct = scan.nextLine();
                     System.out.print("Input the key: ");
                     int key = scan.nextInt();
                     //dencrypt
@@ -55,11 +58,16 @@ class CaeserCipher {
     public static String encryptText(String pt, int key){
         String ct="";
         for(char c: pt.toLowerCase().toCharArray()){
-            for(int i=0; i<alphabets.length(); i++){
-                if(alphabets.toCharArray()[i] == c){
-                    ct += alphabets.toCharArray()[(i+key)%26];
+            if(c == ' ' || c == '_'){
+                ct += c;
+            }else{
+                for(int i=0; i<alphabets.length(); i++){
+                    if(alphabets.toCharArray()[i] == c){
+                        ct += alphabets.toCharArray()[(i+key)%26];
+                    }
                 }
             }
+            
         }
         return ct;
     } 
@@ -67,9 +75,13 @@ class CaeserCipher {
     public static String decryptText(String ct, int key){
         String pt="";
         for(char c: ct.toLowerCase().toCharArray()){
-            for(int i=0; i<alphabets.length(); i++){
-                if(alphabets.toCharArray()[i] == c){
-                    pt += alphabets.toCharArray()[(i-key)%26];
+            if(c == ' ' || c == '_'){
+                pt += c;
+            }else{
+                for(int i=0; i<alphabets.length(); i++){
+                    if(alphabets.toCharArray()[i] == c){
+                        pt += alphabets.toCharArray()[(i-key)%26];
+                    }
                 }
             }
         }
