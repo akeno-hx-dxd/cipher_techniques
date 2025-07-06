@@ -6,7 +6,7 @@
 import java.util.Scanner;
 
 class CaeserCipher {
-    public static String alphabets = "zabcdefghijklmnopqrsuvtwxy";
+    public static String alphabets = "zabcdefghijklmnopqrstuvwxy";
 
     public static void main( String[] args){
         System.out.println("Caeser Cipher Technique.");
@@ -58,14 +58,16 @@ class CaeserCipher {
     public static String encryptText(String pt, int key){
         String ct="";
         for(char c: pt.toLowerCase().toCharArray()){
-            if(c == ' ' || c == '_'){
-                ct += c;
-            }else{
-                for(int i=0; i<alphabets.length(); i++){
-                    if(alphabets.toCharArray()[i] == c){
-                        ct += alphabets.toCharArray()[(i+key)%26];
-                    }
+            boolean isAlpha = false;
+            for(int i=0; i<alphabets.length(); i++){
+                if(alphabets.toCharArray()[i] == c){
+                    ct += alphabets.toCharArray()[(i+key)%26];
+                    isAlpha = true;
+                    break;
                 }
+            }
+            if(!isAlpha){
+                ct += c;
             }
             
         }
@@ -75,14 +77,16 @@ class CaeserCipher {
     public static String decryptText(String ct, int key){
         String pt="";
         for(char c: ct.toLowerCase().toCharArray()){
-            if(c == ' ' || c == '_'){
-                pt += c;
-            }else{
-                for(int i=0; i<alphabets.length(); i++){
-                    if(alphabets.toCharArray()[i] == c){
-                        pt += alphabets.toCharArray()[(i-key)%26];
-                    }
+            boolean isAlpha = false;
+            for(int i=0; i<alphabets.length(); i++){
+                if(alphabets.toCharArray()[i] == c){
+                    pt += alphabets.toCharArray()[(i-key)%26];
+                    isAlpha = true;
+                    break;
                 }
+            }
+            if(!isAlpha){
+                pt += c;
             }
         }
         return pt;
