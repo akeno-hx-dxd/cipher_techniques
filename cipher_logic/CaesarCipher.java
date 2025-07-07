@@ -80,7 +80,12 @@ class CaeserCipher {
             boolean isAlpha = false;
             for(int i=0; i<alphabets.length(); i++){
                 if(alphabets.toCharArray()[i] == c){
-                    pt += alphabets.toCharArray()[(i-key)%26];
+                    int diff = i-key;
+                    if(diff < 0){
+                        pt += alphabets.toCharArray()[26+diff];
+                    }else{
+                        pt += alphabets.toCharArray()[(diff)%26];
+                    }
                     isAlpha = true;
                     break;
                 }
