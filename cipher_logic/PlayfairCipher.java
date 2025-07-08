@@ -26,7 +26,13 @@ class PlayfairCipher {
                 }
                 break;
                 case 2 : {
-                   System.out.println("Coming soon :)");
+                    System.out.println("Selection - Decrypt.");
+                    System.out.print("Input the ciphertext: ");
+                    scan.nextLine();
+                    String ct = scan.nextLine().toUpperCase().replace('J', 'I');
+                    System.out.print("Input key(Alphabetic): ");
+                    String key = scan.next();
+                    decryptPlayfairCipher(ct, key);
                 }
                 break;
                 case 3 : {
@@ -40,6 +46,53 @@ class PlayfairCipher {
                 }
             }
         }
+    }
+
+    public static void decryptPlayfairCipher(String ct, String Key){
+        // generate grid
+        char[][] grid = generateGrid(Key);
+        StringBuilder pt = new StringBuilder();
+        int index = 0;
+        while(index < ct.length() - 1){
+            Pair<Integer, Integer> c1_p = searchElementInGrid(ct.toCharArray()[index], grid);
+            Pair<Integer, Integer> c2_p = searchElementInGrid(ct.toCharArray()[index+1], grid);
+
+            if(c1_p.getElement0() != -1 && c1_p.getElement1() != -1 && c2_p.getElement0() != -1 && c2_p.getElement1() != -1){
+                int f_r = c1_p.getElement0();
+                int f_c = c1_p.getElement1();
+                int s_r = c2_p.getElement0();
+                int s_c = c2_p.getElement1();
+
+                if(f_r == s_r){
+                    f_c = f_c > 0 ? f_c-1 : 4;
+                    s_c = s_c > 0 ? s_c-1 : 4;
+                } else if(f_c == s_c) {
+                    f_r = f_r > 0 ? f_r-1 : 4;
+                    s_r = s_r > 0 ? s_r-1 : 4;
+                } else {
+                    f_c = f_c + s_c;
+                    s_c = f_c - s_c;
+                    f_c = f_c - s_c; 
+                }
+
+                pt.append(grid[f_r][f_c]);
+                pt.append(grid[s_r][s_c]);
+
+            }else{
+                System.err.println("Error in decryption.");
+                System.exit(1);
+            }             
+            index += 2;
+        }
+        for(char[] x : grid){
+            for(char y : x){
+                System.out.print(y+" ");
+            }
+            System.out.println();
+        }
+        System.out.println("CipherText: "+ ct);
+        System.out.println("Key: "+Key);
+        System.out.println("decrypted text: "+ pt.toString());
     }
 
     public static void encryptPlayfairCipher(String pt, String key){
