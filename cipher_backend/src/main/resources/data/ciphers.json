@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "caser cipher",
+        "desc": "blah blah blah blah blah",
+        "complexity": "Easy-Easy"
+    },
+    {
+        "id": 2,
+        "name": "playfair cipher",
+        "desc": "blah blah blah blah blah",
+        "complexity": "Easy-High"
+    },
+    {
+        "id": 3,
+        "name": "one-time-pad cipher",
+        "desc": "blah blah blah blah blah",
+        "complexity": "Easy-Medium"
+    },
+    {
+        "id": 4,
+        "name": "vigenere cipher",
+        "desc": "blah blah blah blah blah",
+        "complexity": "Medium-Easy"
+    },
+    {
+        "id": 5,
+        "name": "hill cipher",
+        "desc": "blah blah blah blah blah e",
+        "complexity": "Hard-Easy"
+    }
+]
