@@ -18,4 +18,8 @@ public class Cipher {
     public String getComplexity() {
         return complexity;
     }
+
+    public String toString(){
+        return "{" + "id: " + id + ", " + "name: " + name + "}";
+    }
 }

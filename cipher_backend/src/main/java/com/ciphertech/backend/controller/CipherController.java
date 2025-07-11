@@ -1,17 +1,20 @@
 package com.ciphertech.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 //models import
 import com.ciphertech.backend.model.Cipher;
-
+import com.ciphertech.backend.model.EncryptRequest;
+import com.ciphertech.backend.model.EncryptResult;
 //services import
 import com.ciphertech.backend.service.DataLoader;
 
 //utils import
 import com.ciphertech.backend.util.ApiResponse;
+
 // import com.ciphertech.backend.util.CipherUtil.*;
 
 @RestController
@@ -52,37 +55,50 @@ public class CipherController {
         }
     }
 
-    // @PostMapping("/encrypt/{cipher_id}")
-    // public ApiResponse<EncryptResult> encryptText(@PathVariable Long cipher_id){
-    //     try {
-    //         Cipher cipher = cipher_list.getCiphers().stream()
-    //                         .filter(c -> c.getId().equals(cipher_id))
-    //                         .findFirst()
-    //                         .orElse(null);
+    @PostMapping("/encrypt")
+    public ResponseEntity<ApiResponse<EncryptResult>> encryptText(@RequestBody EncryptRequest cipher_req){
+        try {
+
+            if(cipher_req.getCipherId() == null || cipher_req.getPlainText() == null || cipher_req.getKey() == null){
+                return ResponseEntity.status(400).body(ApiResponse.error("Missing required body parameters"));
+            }
+            Cipher cipher = cipher_list.getCiphers().stream()
+                            .filter(c -> c.getId().equals(cipher_req.getCipherId()))
+                            .findFirst()
+                            .orElse(null);
             
-    //         if(cipher == null){
-    //             return ApiResponse.error("Cipher not found with id: "+ cipher_id);
-    //         }
+            if(cipher == null){
+                return ResponseEntity.status(404).body(ApiResponse.error("Cipher not found with id: "+ cipher_req.getCipherId()));
+            }
+
+            EncryptResult result = new EncryptResult(
+                cipher_req.getPlainText(),
+                cipher_req.getKey(), 
+                cipher.getName(),
+                cipher_req.getCipherId());
     
-    //         switch (cipher.getName()) {
-    //             case "caesar cipher":
-    //                 break;
+            switch (cipher.getName()) {
+                case "caesar cipher":
+                    break;
     
-    //             case "playfair cipher":
-    //                 break;
+                case "playfair cipher":
+                    break;
     
-    //             case "one-time-pad cipher":
-    //                 break;
+                case "one-time-pad cipher":
+                    break;
     
-    //             case "vigenere cipher":
-    //                 break;
+                case "vigenere cipher":
+                    break;
     
-    //             case "hill cipher":
-    //                 break;
+                case "hill cipher":
+                    break;
     
-    //             default:
-    //                 return ApiResponse.error("Cipher not found with id: "+cipher_id);
-    //         }
-    //     } 
-    // }
+                default:
+                    return ResponseEntity.status(404).body(ApiResponse.error("Cipher not found with id: "+cipher_req.getCipherId()));
+            }
+            return ResponseEntity.ok(ApiResponse.success("Demo Result",result));
+        } catch(Exception e){
+            return ResponseEntity.status(500).body(ApiResponse.error("Failed to retrieved cipher: "+ e.getMessage()));
+        }
+    }
 }

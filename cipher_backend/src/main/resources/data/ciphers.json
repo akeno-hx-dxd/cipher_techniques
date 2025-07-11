@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "name": "caser cipher",
+        "name": "caesar cipher",
         "desc": "blah blah blah blah blah",
         "complexity": "Easy-Easy"
     },

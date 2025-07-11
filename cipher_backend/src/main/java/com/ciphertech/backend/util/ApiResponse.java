@@ -32,11 +32,11 @@ public class ApiResponse<T>{
 
     
     public static <T> ApiResponse<T> error(String message){
-    return new ApiResponse<>(true, message, null);
+    return new ApiResponse<>(false, message, null);
     }
 
     public static <T> ApiResponse<T> error(String message,T data){
-    return new ApiResponse<>(true, message, data);
+    return new ApiResponse<>(false, message, data);
     }
 
     public T getData() {
@@ -47,7 +47,7 @@ public class ApiResponse<T>{
         return message;
     }
 
-    public boolean getSuccsess(){
+    public boolean getSuccess(){
         return success;
     }
 }
